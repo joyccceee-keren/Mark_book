@@ -1,5 +1,4 @@
-// Static Bible Content and Data structures for "Mark: Know Jesus"
-
+// Stores the learning modules for Chapters 1-16. Community contributors can add content structures for later chapters here.
 const CHAPTERS_DATA = {
   1: {
     id: 1,
