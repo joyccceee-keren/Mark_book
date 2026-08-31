@@ -1,5 +1,5 @@
 /* Modern, Clean, Peaceful Christian CSS System for "Mark: Know Jesus" */
-
+/* Theme Customization Tokens. Modify these variables to customize colors and typography. */
 :root {
   /* Color Palette */
   --primary-deep: #1e293b;     /* Deep slate navy for headings and dark UI */
