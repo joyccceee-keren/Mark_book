@@ -10,8 +10,8 @@
   --bg-white: #ffffff;
   --text-dark: #334155;        /* Soft black slate for readable body */
   --text-muted: #64748b;       /* Muted text color */
-  --accent-green: #4e8a6c;     /* Correct states / completion */
-  --accent-green-light: #e8f3ee;
+  --accent-green: #2e5b42;     /* Correct states / completion (darker green) */
+  --accent-green-light: #e1eae5;
   --accent-red: #c05c5c;       /* Incorrect states / mistakes */
   --accent-red-light: #fdf2f2;
   --border-light: #e2e8f0;
