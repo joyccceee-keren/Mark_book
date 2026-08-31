@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mark: Know Jesus - Bible Learning App</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- App Wrapper representing the mobile frame on desktop -->
+  <div class="mobile-frame">
+    
+    <!-- Top Action / Stats Bar -->
+    <header class="app-header">
+      <div class="header-left">
+        <span class="user-level" id="header-level">Discoverer (Level 1)</span>
+      </div>
+      <div class="header-right">
+        <div class="stat-badge xp-badge">
+          <svg class="icon-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span id="header-xp">0 XP</span>
+        </div>
+        <div class="stat-badge streak-badge">
+          <svg class="icon-pulse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 22h20L12 2z"></path><path d="M12 6l-6 12h12l-6-12z"></path></svg>
+          <span id="header-streak">0 🔥</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Screens Container -->
+    <main class="screens-container" id="main-content">
+      
+      <!-- SCREEN: HOME -->
+      <section id="screen-home" class="app-screen active">
+        <div class="home-hero">
+          <div class="hero-logo">✝️</div>
+          <h1 class="app-title">Mark: Know Jesus</h1>
+          <p class="app-subtitle">Read, understand, play, and follow</p>
+        </div>
+
+        <!-- Daily Encouragement -->
+        <div class="card encouragement-card">
+          <div class="card-tag">Daily Encouragement</div>
+          <blockquote class="encouragement-text">
+            "Come and follow Me, and I will make you become fishers of men."
+          </blockquote>
+          <cite class="encouragement-author">— Mark 1:17</cite>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="card progress-tracker-card" onclick="navigateTo('chapters')">
+          <div class="progress-info">
+            <h3>Gospel Progress</h3>
+            <span class="progress-fraction" id="home-progress-fraction">0 / 16 Chapters</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="home-progress-bar" style="width: 0%;"></div>
+          </div>
+          <p class="progress-help-text" id="home-progress-text">Tap to view chapters and start your journey.</p>
+        </div>
+
+        <!-- Continue Learning Quick Link -->
+        <div class="card continue-card" id="home-continue-card" onclick="startChapter(1)">
+          <div class="continue-content">
+            <h4>CONTINUE LEARNING</h4>
+            <h3 id="continue-chapter-title">Mark 1: Jesus Begins His Ministry</h3>
+            <p>Summary, Explanations, interactive games &amp; quizzes</p>
+          </div>
+          <div class="continue-arrow">➔</div>
+        </div>
+
+        <!-- Daily Challenge Card -->
+        <div class="card daily-challenge-card" id="daily-challenge-card">
+          <div class="card-header-row">
+            <span class="challenge-badge">⚡ Daily Challenge</span>
+            <span class="streak-count" id="challenge-streak-text">0 day streak</span>
+          </div>
+          <div id="challenge-question-container">
+            <!-- Dynamic Daily Challenge Content -->
+            <p class="challenge-q" id="daily-q-text">Who called the first disciples in Mark 1?</p>
+            <div class="challenge-options" id="daily-q-options">
+              <!-- Dynamically populated options -->
+            </div>
+          </div>
+          <div id="challenge-feedback" class="challenge-feedback hidden">
+            <!-- Dynamic feedback explanation -->
+          </div>
+        </div>
+
+        <div style="height: 40px;"></div> <!-- Spacing -->
+      </section>
+
+      <!-- SCREEN: CHAPTERS -->
+      <section id="screen-chapters" class="app-screen">
+        <div class="screen-header">
+          <h2>Gospel Chapters</h2>
+          <p>Read, play and complete each chapter to unlock the next</p>
+        </div>
+
+        <div class="chapters-grid" id="chapters-list">
+          <!-- Chapters will be rendered here dynamically -->
+        </div>
+
+        <div style="height: 40px;"></div>
+      </section>
+
+      <!-- SCREEN: CHAPTER DETAIL / LEARNING -->
+      <section id="screen-learning" class="app-screen">
+        <div class="detail-header">
+          <button class="back-btn" onclick="navigateTo('chapters')">← Chapters</button>
+          <h2 id="learning-chapter-title">Mark 1</h2>
+          <p class="chapter-subtitle" id="learning-chapter-subtitle">Jesus Begins His Ministry</p>
+        </div>
+
+        <!-- Learning View Tabs -->
+        <nav class="learning-tabs">
+          <button class="tab-btn active" onclick="switchLearningTab('summary')">Summary</button>
+          <button class="tab-btn" onclick="switchLearningTab('explain')">Understand</button>
+          <button class="tab-btn" onclick="switchLearningTab('timeline')">Timeline</button>
+          <button class="tab-btn" onclick="switchLearningTab('people')">People &amp; Places</button>
+          <button class="tab-btn" onclick="switchLearningTab('verses')">Key Verses</button>
+        </nav>
+
+        <!-- Learning Content Body -->
+        <div class="learning-content-body">
+          
+          <!-- TAB: SUMMARY -->
+          <div id="tab-summary" class="tab-content active">
+            <div class="card read-card">
+              <h3>Chapter Overview</h3>
+              <p id="learning-summary-text"></p>
+            </div>
+            <div class="context-box">
+              <h4>Historical &amp; Biblical Context</h4>
+              <p id="learning-context-text"></p>
+            </div>
+          </div>
+
+          <!-- TAB: EXPLAIN -->
+          <div id="tab-explain" class="tab-content">
+            <div class="explain-section">
+              <h3>What Happened?</h3>
+              <ul class="explain-list" id="explain-events-list"></ul>
+            </div>
+            <div class="explain-section">
+              <h3>What Did Jesus Teach?</h3>
+              <ul class="explain-list" id="explain-teachings-list"></ul>
+            </div>
+            <div class="explain-section">
+              <h3>What does this show us about Jesus?</h3>
+              <ul class="explain-list" id="explain-jesus-list"></ul>
+            </div>
+            <div class="explain-section bg-card">
+              <h3>Practical Spiritual Lessons</h3>
+              <ul class="lessons-list" id="explain-lessons-list"></ul>
+            </div>
+            <div class="explain-section reflection-box">
+              <h3>Reflect &amp; Apply</h3>
+              <p>Consider these questions honestly in your heart:</p>
+              <ul class="reflection-list" id="explain-reflections-list"></ul>
+              <button class="btn btn-outline" onclick="markSectionRead('explain')">Reflect &amp; Complete section</button>
+            </div>
+          </div>
+
+          <!-- TAB: TIMELINE -->
+          <div id="tab-timeline" class="tab-content">
+            <p class="timeline-intro">Trace the chronological events of the chapter below:</p>
+            <div class="timeline-container" id="timeline-flow">
+              <!-- Timeline nodes populated by JS -->
+            </div>
+          </div>
+
+          <!-- TAB: PEOPLE & PLACES -->
+          <div id="tab-people" class="tab-content">
+            <h3>Important People</h3>
+            <p class="sub-instructions">Tap to learn about their role in this chapter</p>
+            <div class="entity-grid" id="people-list"></div>
+
+            <h3 style="margin-top: 30px;">Key Places</h3>
+            <p class="sub-instructions">Tap to learn about the geographical context</p>
+            <div class="entity-grid" id="places-list"></div>
+          </div>
+
+          <!-- TAB: VERSES -->
+          <div id="tab-verses" class="tab-content">
+            <p class="verses-intro">Paraphrased and key highlights from this chapter. Memorize these to guard your heart.</p>
+            <div class="verses-list-container" id="verses-list"></div>
+          </div>
+
+        </div>
+
+        <!-- Fixed Bottom Action Bar for Learning -->
+        <div class="learning-action-footer">
+          <div class="footer-status-pills">
+            <span class="status-pill locked" id="pill-read">Read ✓</span>
+            <span class="status-pill locked" id="pill-games">Games ✓</span>
+            <span class="status-pill locked" id="pill-quiz">Quiz ✓</span>
+          </div>
+          <div class="footer-btn-row">
+            <button class="btn btn-secondary flex-1" id="btn-play-games" onclick="navigateTo('games')">Play Games</button>
+            <button class="btn btn-primary flex-1" id="btn-take-quiz" onclick="startQuiz()">Take Chapter Quiz</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN: GAMES HUB -->
+      <section id="screen-games" class="app-screen">
+        <div class="screen-header">
+          <h2>Bible Games Center</h2>
+          <p>Complete learning activities to unlock these scripture reinforcement games</p>
+        </div>
+
+        <div class="games-hub-grid" id="games-hub-list">
+          <!-- Game selection cards -->
+          <div class="card game-card" onclick="launchGame('whoSaidIt')">
+            <div class="game-icon">🗣️</div>
+            <div class="game-info">
+              <h3>Game 1: Who Said It?</h3>
+              <p>Identify the speaker of key statements in this chapter.</p>
+              <span class="badge badge-xp">+20 XP</span>
+            </div>
+          </div>
+
+          <div class="card game-card" onclick="launchGame('whoAmI')">
+            <div class="game-icon">👤</div>
+            <div class="game-info">
+              <h3>Game 2: Who Am I?</h3>
+              <p>Guess the biblical person based on descriptive clues.</p>
+              <span class="badge badge-xp">+20 XP</span>
+            </div>
+          </div>
+
+          <div class="card game-card" onclick="launchGame('whatNext')">
+            <div class="game-icon">➡️</div>
+            <div class="game-info">
+              <h3>Game 3: What Happened Next?</h3>
+              <p>Test your chronological memory of Gospel events.</p>
+              <span class="badge badge-xp">+20 XP</span>
+            </div>
+          </div>
+
+          <div class="card game-card" onclick="launchGame('match')">
+            <div class="game-icon">🔗</div>
+            <div class="game-info">
+              <h3>Game 4: Match the Following</h3>
+              <p>Connect people, places, and events correctly.</p>
+              <span class="badge badge-xp">+20 XP</span>
+            </div>
+          </div>
+
+          <div class="card game-card" onclick="launchGame('order')">
+            <div class="game-icon">🔢</div>
+            <div class="game-info">
+              <h3>Game 5: Put It in Order</h3>
+              <p>Arrange 5 chapter events in their correct historical sequence.</p>
+              <span class="badge badge-xp">+20 XP</span>
+            </div>
+          </div>
+
+          <div class="card game-card" onclick="launchGame('trueFalse')">
+            <div class="game-icon">⚖️</div>
+            <div class="game-info">
+              <h3>Game 6: True or False</h3>
+              <p>Decide whether statements about the chapter are true or false.</p>
+              <span class="badge badge-xp">+20 XP</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="height: 40px;"></div>
+      </section>
+
+      <!-- SCREEN: GAME PLAY ARENA -->
+      <section id="screen-game-play" class="app-screen">
+        <div class="detail-header">
+          <button class="back-btn" onclick="navigateTo('games')">← Games</button>
+          <h2 id="game-title">Game Title</h2>
+          <p class="chapter-subtitle" id="game-subtitle">Reinforce Your Knowledge</p>
+        </div>
+
+        <div class="game-container-box">
+          <!-- Score and question counter -->
+          <div class="game-stats-header">
+            <span id="game-score">Score: 0 / 0</span>
+            <span id="game-progress-indicator">Question 1 of 3</span>
+          </div>
+
+          <!-- Dynamic Arena for Questions -->
+          <div class="game-arena" id="game-arena">
+            <!-- Dynamic game views will be rendered here -->
+          </div>
+
+          <!-- Correct / Incorrect banner -->
+          <div class="game-feedback-banner hidden" id="game-feedback-banner">
+            <div id="game-feedback-status">Correct!</div>
+            <p id="game-feedback-explanation"></p>
+            <button class="btn btn-primary" id="game-next-btn">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN: QUIZ PLAY -->
+      <section id="screen-quiz" class="app-screen">
+        <div class="detail-header">
+          <button class="back-btn" onclick="confirmQuitQuiz()">← Quit Quiz</button>
+          <h2>Mark Chapter Quiz</h2>
+          <div class="quiz-bar-container">
+            <div class="quiz-bar-fill" id="quiz-progress-bar" style="width: 10%;"></div>
+          </div>
+          <span class="quiz-tracker" id="quiz-question-number">Question 1 of 10</span>
+        </div>
+
+        <div class="quiz-card-box">
+          <p class="quiz-question-text" id="quiz-question-text">Question content goes here?</p>
+          <div class="quiz-options-container" id="quiz-options">
+            <!-- Populated options -->
+          </div>
+        </div>
+
+        <!-- Immediate Quiz Explanation overlay/banner -->
+        <div class="quiz-feedback-box hidden" id="quiz-feedback-box">
+          <h3 id="quiz-feedback-title">Correct!</h3>
+          <p id="quiz-feedback-text">Detailed explanation showing how this points to Jesus or explains the context.</p>
+          <button class="btn btn-primary btn-block" id="quiz-next-btn">Next Question</button>
+        </div>
+      </section>
+
+      <!-- SCREEN: CHAPTER COMPLETION SUMMARY -->
+      <section id="screen-completion" class="app-screen">
+        <div class="completion-hero">
+          <div class="trophy-badge animate-bounce">🏆</div>
+          <h1>Chapter Completed!</h1>
+          <h2 id="completion-chapter-title">Mark 1</h2>
+          <p>You've successfully finished all requirements!</p>
+        </div>
+
+        <div class="completion-stats-grid">
+          <div class="comp-stat-card">
+            <div class="comp-stat-val" id="comp-score">90%</div>
+            <div class="comp-stat-label">Quiz Score</div>
+          </div>
+          <div class="comp-stat-card">
+            <div class="comp-stat-val" id="comp-stars">★★★★☆</div>
+            <div class="comp-stat-label">Stars Earned</div>
+          </div>
+          <div class="comp-stat-card">
+            <div class="comp-stat-val" id="comp-xp">+100</div>
+            <div class="comp-stat-label">XP Gained</div>
+          </div>
+        </div>
+
+        <div class="card completion-checklist-card">
+          <h3>Your Achievements:</h3>
+          <ul class="checklist-items">
+            <li>✓ Chapter Summary Read</li>
+            <li>✓ Detailed Teachings &amp; Lessons Explored</li>
+            <li>✓ Timeline Events Traced</li>
+            <li>✓ Interactive People &amp; Places Studied</li>
+            <li>✓ Chapter Bible Games Played</li>
+            <li>✓ 10-Question Comprehensive Quiz Cleared</li>
+          </ul>
+        </div>
+
+        <!-- Chapter Connections -->
+        <div class="card connection-card">
+          <h3>Connecting to the Next Chapter:</h3>
+          <p id="completion-connection-text"></p>
+        </div>
+
+        <div class="completion-actions">
+          <button class="btn btn-primary btn-block" onclick="navigateTo('chapters')">Back to Chapters</button>
+          <button class="btn btn-secondary btn-block" id="btn-next-chapter-action" onclick="startChapter(2)">Unlock Next Chapter</button>
+          <button class="btn btn-outline btn-block" id="btn-share-whatsapp" onclick="shareProgressWhatsApp()">Share Achievements on WhatsApp 📱</button>
+        </div>
+        <div style="height: 40px;"></div>
+      </section>
+
+      <!-- SCREEN: MISTAKES REVIEW -->
+      <section id="screen-mistakes" class="app-screen">
+        <div class="screen-header">
+          <h2>Review My Mistakes</h2>
+          <p>The goal is to learn and remember Scripture. Review the questions you missed and correct them.</p>
+        </div>
+
+        <div class="mistakes-container" id="mistakes-list">
+          <!-- Dynamic mistake list cards with retry triggers -->
+        </div>
+
+        <div style="height: 40px;"></div>
+      </section>
+
+      <!-- SCREEN: PROGRESS & PROFILE -->
+      <section id="screen-progress" class="app-screen">
+        <div class="profile-hero">
+          <div class="avatar-badge" id="profile-avatar">🕵️‍♂️</div>
+          <h2 id="profile-level-name">Discoverer (Level 1)</h2>
+          <p>Faith Journey Progress</p>
+        </div>
+
+        <!-- Main Stats Grid -->
+        <div class="stats-summary-grid">
+          <div class="stat-box">
+            <span class="stat-number" id="profile-stat-xp">0</span>
+            <span class="stat-label">Total XP</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="profile-stat-completed">0 / 16</span>
+            <span class="stat-label">Chapters</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="profile-stat-streak">0</span>
+            <span class="stat-label">Day Streak</span>
+          </div>
+          <div class="stat-box" onclick="navigateTo('mistakes')" style="cursor: pointer;">
+            <span class="stat-number" id="profile-stat-mistakes" style="color: var(--accent-red);">0</span>
+            <span class="stat-label">Mistakes (Review)</span>
+          </div>
+        </div>
+
+        <!-- Jesus in Mark Progress Tracking -->
+        <div class="card section-card">
+          <h3>Jesus in the Gospel of Mark</h3>
+          <p class="section-help">Characteristics of Jesus unlocked as you complete chapters:</p>
+          <div class="characteristics-list" id="characteristics-unlocked-list">
+            <!-- Populated characteristic cards -->
+          </div>
+        </div>
+
+        <!-- Badges Earned Section -->
+        <div class="card section-card">
+          <h3>Badges &amp; Achievements</h3>
+          <div class="badges-grid" id="profile-badges-grid">
+            <!-- Badge icons dynamically populated -->
+          </div>
+        </div>
+
+        <div class="completion-actions">
+          <button class="btn btn-outline btn-block" onclick="shareGeneralProgress()">Share General Progress to WhatsApp 📱</button>
+          <button class="btn btn-danger btn-block" onclick="resetAllProgress()" style="margin-top: 20px; background-color: var(--accent-red);">Reset All Progress</button>
+        </div>
+
+        <div style="height: 40px;"></div>
+      </section>
+
+      <!-- SCREEN: SEARCH -->
+      <section id="screen-search" class="app-screen">
+        <div class="screen-header">
+          <h2>Search Gospel Knowledge</h2>
+          <p>Find people, places, teachings, and miracles from the chapters you've unlocked.</p>
+        </div>
+
+        <div class="search-bar-box">
+          <input type="text" id="search-input" placeholder="Search (e.g. Peter, Galilee, preach, heal)..." oninput="runSearchQuery()">
+        </div>
+
+        <div class="search-filters">
+          <button class="filter-pill active" onclick="setSearchFilter('all')">All</button>
+          <button class="filter-pill" onclick="setSearchFilter('people')">People</button>
+          <button class="filter-pill" onclick="setSearchFilter('places')">Places</button>
+          <button class="filter-pill" onclick="setSearchFilter('teachings')">Teachings</button>
+          <button class="filter-pill" onclick="setSearchFilter('events')">Events</button>
+        </div>
+
+        <div class="search-results-list" id="search-results-container">
+          <div class="empty-search-state">
+            Type something to search the Gospel of Mark.
+          </div>
+        </div>
+
+        <div style="height: 40px;"></div>
+      </section>
+
+    </main>
+
+    <!-- Interactive Entity Details Modal (People & Places info popups) -->
+    <div class="modal-overlay hidden" id="entity-modal">
+      <div class="modal-box">
+        <h3 id="modal-entity-name">Name</h3>
+        <p id="modal-entity-type" class="modal-type-tag">Person</p>
+        <p id="modal-entity-description" class="modal-desc-body">Description content...</p>
+        <button class="btn btn-secondary btn-block" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+
+    <!-- Sticky Bottom Navigation Bar -->
+    <nav class="bottom-navbar">
+      <button class="nav-tab active" id="nav-home" onclick="navigateTo('home')">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-tab" id="nav-chapters" onclick="navigateTo('chapters')">
+        <span class="nav-icon">📖</span>
+        <span class="nav-label">Chapters</span>
+      </button>
+      <button class="nav-tab" id="nav-games" onclick="navigateTo('games')">
+        <span class="nav-icon">🎮</span>
+        <span class="nav-label">Games</span>
+      </button>
+      <button class="nav-tab" id="nav-mistakes" onclick="navigateTo('mistakes')">
+        <span class="nav-icon">🛡️</span>
+        <span class="nav-label">Review</span>
+      </button>
+      <button class="nav-tab" id="nav-progress" onclick="navigateTo('progress')">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Profile</span>
+      </button>
+      <button class="nav-tab" id="nav-search" onclick="navigateTo('search')">
+        <span class="nav-icon">🔍</span>
+        <span class="nav-label">Search</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- Data and Application Script References -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
